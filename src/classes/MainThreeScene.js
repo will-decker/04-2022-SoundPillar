@@ -6,7 +6,8 @@ import RAF from '../utils/RAF';
 import config from '../utils/config';
 import MyGUI from '../utils/MyGUI';
 
-import SpherePillarsClass from './SpherePillarsClass';
+import SpherePillars from './SpherePillarsClass';
+import Floor from './FloorClass';
 
 import simpleFrag from '../shaders/simple.frag';
 import simpleVert from '../shaders/simple.vert';
@@ -43,15 +44,8 @@ class MainThreeScene {
     this.controls.maxDistance = 1500;
     this.controls.minDistance = 0;
 
-    //DUMMY CUBE + SIMPLE GLSL SHADER LINKAGE
-    const shaderMat = new THREE.ShaderMaterial({
-      vertexShader: simpleVert,
-      fragmentShader: simpleFrag,
-    });
-    const cube = new THREE.Mesh(new THREE.BoxGeometry(), shaderMat);
-    this.scene.add(cube);
-
-    SpherePillarsClass.init(this.scene);
+    SpherePillars.init(this.scene);
+    // Floor.init(this.scene);
 
     MyGUI.hide();
     if (config.myGui) MyGUI.show();
