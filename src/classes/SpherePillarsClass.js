@@ -10,6 +10,8 @@ class SpherePillarsClass {
 
   init(scene) {
     this.scene = scene;
+    this.upVec = new THREE.Vector3(0, 1, 0);
+    this.pillar;
 
     const gTex = this.texLoader.load('./assets/textures/greyMetal.png');
     const bTex = this.texLoader.load('./assets/textures/blackMetal.png');
@@ -21,14 +23,70 @@ class SpherePillarsClass {
       console.log(glb);
       glb.scene.traverse((child) => {
         if (child.name == 'BASE') {
+          this.pillar = child;
           child.material = this.bMatCap;
         }
         if (child.name == 'Cylinder') {
           child.material = this.gMatCap;
         }
       });
-      this.scene.add(glb.scene);
+      this.computePositions();
     });
+  }
+
+  computePositions() {
+    const sphereGeom = new THREE.IcosahedronGeometry(2, 3);
+    const sphereMat = this.gMatCap;
+    const sphere = new THREE.Mesh(sphereGeom, sphereMat);
+    this.scene.add(sphere);
+    console.log(sphereGeom);
+
+    let verArray = [];
+    for (let i = 0; i < sphereGeom.attributes.position.array.length; i += 3) {
+      const x = sphereGeom.attributes.position.array[i];
+      const y = sphereGeom.attributes.position.array[i + 1];
+      const z = sphereGeom.attributes.position.array[i + 2];
+      verArray.push({
+        x: x,
+        y: y,
+        z: z,
+      });
+    }
+    console.log(verArray);
+
+    let pillPos = [];
+    for (let i = 0; i < verArray.length; i++) {
+      let existsFlag = false;
+      for (let j = 0; j < pillPos.length; j++) {
+        if (
+          pillPos[j].x == verArray[i].x &&
+          pillPos[j].y == verArray[i].y &&
+          pillPos[j].z == verArray[i].z
+        ) {
+          existsFlag = true;
+          console.log('hey');
+        }
+      }
+
+      if (!existsFlag) {
+        pillPos.push({
+          x: verArray[i].x,
+          y: verArray[i].y,
+          z: verArray[i].z,
+        });
+        const c = this.pillar.clone();
+        const posVec = new THREE.Vector3(
+          verArray[i].x,
+          verArray[i].y,
+          verArray[i].z
+        );
+        c.position.copy(posVec);
+        c.scale.multiplyScalar(0.2);
+        c.quaternion.setFromUnitVectors(this.upVec, posVec.normalize());
+        this.scene.add(c);
+      }
+    }
+    console.log(pillPos);
   }
 
   update() {}

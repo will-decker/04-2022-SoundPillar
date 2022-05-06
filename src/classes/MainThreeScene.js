@@ -45,7 +45,7 @@ class MainThreeScene {
     this.controls.minDistance = 0;
 
     SpherePillars.init(this.scene);
-    // Floor.init(this.scene);
+    Floor.init(this.scene);
 
     MyGUI.hide();
     if (config.myGui) MyGUI.show();

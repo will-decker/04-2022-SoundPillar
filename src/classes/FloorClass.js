@@ -9,10 +9,16 @@ class Floor {
 
   init(scene) {
     this.scene = scene;
-    this.modelLoader.load('./assets/models/floor.glb', (glb) => {
-      console.log(glb);
+    this.floor;
 
-      this.scene.add(glb.scene);
+    this.modelLoader.load('./assets/models/floor.glb', (glb) => {
+      glb.scene.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          this.floor = child;
+        }
+      });
+      this.floor.translateY(-3);
+      this.scene.add(this.floor);
     });
   }
 
