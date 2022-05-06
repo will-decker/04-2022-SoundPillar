@@ -11,6 +11,7 @@ class SpherePillarsClass {
   init(scene) {
     this.scene = scene;
     this.upVec = new THREE.Vector3(0, 1, 0);
+    this.pillars = new THREE.Group();
     this.pillar;
 
     const gTex = this.texLoader.load('./assets/textures/greyMetal.png');
@@ -83,13 +84,23 @@ class SpherePillarsClass {
         c.position.copy(posVec);
         c.scale.multiplyScalar(0.2);
         c.quaternion.setFromUnitVectors(this.upVec, posVec.normalize());
-        this.scene.add(c);
+        this.pillars.add(c);
       }
     }
+    this.scene.add(this.pillars);
     console.log(pillPos);
   }
 
-  update() {}
+  update() {
+    let i = 0;
+    while (i < this.pillars.children.length) {
+      this.pillars.children[i].children[0].position.y =
+        (Math.sin(Date.now() * 0.005 + this.pillars.children[i].position.x) +
+          1) *
+        1.2;
+      i++;
+    }
+  }
 
   bind() {}
 }
