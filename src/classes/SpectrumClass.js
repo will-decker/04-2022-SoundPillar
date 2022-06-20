@@ -21,6 +21,12 @@ class Spectrum {
       uSpecterSize: {
         value: 0.6,
       },
+      uWaveBorder: {
+        value: 0.1,
+      },
+      uBorderColor: {
+        value: new THREE.Color('hsl(287, 80%, 80%)'),
+      },
       uTime: {
         value: 0,
       },
