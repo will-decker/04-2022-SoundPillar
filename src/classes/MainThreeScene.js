@@ -8,6 +8,7 @@ import MyGUI from '../utils/MyGUI';
 
 import SpherePillars from './SpherePillarsClass';
 import Floor from './FloorClass';
+import Spectrum from './SpectrumClass';
 
 import simpleFrag from '../shaders/simple.frag';
 import simpleVert from '../shaders/simple.vert';
@@ -38,7 +39,7 @@ class MainThreeScene {
       0.1,
       1000
     );
-    this.camera.position.set(0, 0, 5);
+    this.camera.position.set(0, 0, 10);
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.enabled = config.controls;
     this.controls.maxDistance = 1500;
@@ -46,6 +47,7 @@ class MainThreeScene {
 
     SpherePillars.init(this.scene);
     Floor.init(this.scene);
+    Spectrum.init(this.scene);
 
     MyGUI.hide();
     if (config.myGui) MyGUI.show();
