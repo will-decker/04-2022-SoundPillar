@@ -10,9 +10,6 @@ import SpherePillars from './SpherePillarsClass';
 import Floor from './FloorClass';
 import Spectrum from './SpectrumClass';
 
-import simpleFrag from '../shaders/simple.frag';
-import simpleVert from '../shaders/simple.vert';
-
 class MainThreeScene {
   constructor() {
     this.bind();
@@ -60,6 +57,7 @@ class MainThreeScene {
   update() {
     this.renderer.render(this.scene, this.camera);
     SpherePillars.update();
+    Spectrum.update();
   }
 
   resizeCanvas() {
