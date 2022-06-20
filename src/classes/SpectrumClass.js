@@ -19,7 +19,7 @@ class Spectrum {
         value: this.textureLoader.load('assets/textures/blackMetal.png'),
       },
       uSpecterSize: {
-        value: 0.6,
+        value: 0.4,
       },
       uWaveBorder: {
         value: 0.1,
